@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    tools:context=".SignupLoginActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="300sp"
+                android:layout_height="150sp"
+                android:background="@color/white"
+                android:padding="10sp"
+                android:src="@drawable/photo_illus_bg" />
+
+            <TextView
+                android:id="@+id/txtSignInTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:fontFamily="@font/whitney_bold"
+                android:text="Sign In"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/txtWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:fontFamily="@font/whitney_mediumitalic"
+                android:text="Welcome you to Notify!"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_corners"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="20sp">
+
+                <EditText
+                    android:id="@+id/username"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_corners_stroke"
+                    android:hint="Email"
+                    android:textSize="22sp"
+                    android:padding="15dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/whitney_medium"
+                    android:inputType="textEmailAddress"
+                    android:drawableLeft="@drawable/ic_email_24px"
+                    android:drawablePadding="10dp"/>
+
+                <EditText
+                    android:id="@+id/password"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_corners_stroke"
+                    android:hint="Password"
+                    android:textSize="22sp"
+                    android:padding="15dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/whitney_medium"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/ic_lock_24px"
+                    android:drawablePadding="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/chkAgree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/whitney_medium"
+                        android:text="Remember me"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txtLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="5sp"
+                        android:fontFamily="@font/whitney_semibolditalic"
+                        android:gravity="end"
+                        android:text="Forgot password?"
+                        android:textColor="@color/PrimaryContainer"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15sp"
+                    android:background="@drawable/shape_corners"
+                    android:paddingLeft="20sp"
+                    android:paddingRight="20sp"
+                    android:fontFamily="@font/whitney_bold"
+                    android:textColor="@color/OnSecondaryContainer"
+                    android:text="Sign In" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
