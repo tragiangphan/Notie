@@ -193,7 +193,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        setTitle("Edit Note");
+        setTitle("Create Note");
         fabSave = findViewById(R.id.fabSavedNote);
         editTitle = findViewById(R.id.noteTitle);
         editSubtitle = findViewById(R.id.editNoteSubtitle);

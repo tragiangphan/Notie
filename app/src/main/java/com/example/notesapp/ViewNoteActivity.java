@@ -41,7 +41,7 @@ public class ViewNoteActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        setTitle("View Note");
+        setTitle("Edit Note");
         txtNoteTitle = findViewById(R.id.noteTitle);
         txtNoteSubtitle = findViewById(R.id.noteSubtitle);
         txtNoteContent = findViewById(R.id.noteContent);
