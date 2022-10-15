@@ -55,7 +55,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:onClick="mark"
-                        android:src="@drawable/ic_grade_24px"
+                        android:src="@drawable/ic_bookmark_24px"
                         android:padding="2dp"
                         app:tint="@color/grey" />
                 </LinearLayout>
