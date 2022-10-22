@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,19 +25,20 @@ import java.util.Date;
 import java.util.List;
 
 public class SignupLoginActivity extends AppCompatActivity {
-    EditText usernameEditText, passwordEditText;
+    TextInputLayout usernameEditText, passwordEditText;
     Button loginButton;
     ProgressBar loadingProgressBar;
     DatabaseReference userDatabase;
     ActionBar actionBar;
+    CheckBox chkRemember;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_login);
+        setUpDatabse();
         setControl();
         setEvent();
-        setUpDatabse();
     }
 
     private void setEvent() {
@@ -56,9 +59,12 @@ public class SignupLoginActivity extends AppCompatActivity {
     }
 
     private void checkAlreadyLogIn() {
-        if (StaticUtilities.getUsername(SignupLoginActivity.this) != null) {
+        if (StaticUtilities.getUsername(SignupLoginActivity.this) != null && chkRemember.isChecked()) {
             startActivity(new Intent(SignupLoginActivity.this, MainActivity.class));
             finish();
+        }
+        if (StaticUtilities.getUsername(SignupLoginActivity.this) != null) {
+            startActivity(new Intent(SignupLoginActivity.this, MainActivity.class));
         }
     }
 
@@ -66,18 +72,18 @@ public class SignupLoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (usernameEditText.getText().toString().isEmpty()) {
+                if (usernameEditText.getEditText().getText().toString().isEmpty()) {
                     usernameEditText.setError("Email is empty!");
                     usernameEditText.requestFocus();
                     return;
                 }
-                if (passwordEditText.getText().toString().isEmpty()) {
+                if (passwordEditText.getEditText().getText().toString().isEmpty()) {
                     passwordEditText.setError("Password is empty!");
                     passwordEditText.requestFocus();
                     return;
                 }
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                ProcessLogin(usernameEditText.getText().toString(), passwordEditText.getText().toString());
+                ProcessLogin(usernameEditText.getEditText().getText().toString(), passwordEditText.getEditText().getText().toString());
             }
         });
     }
@@ -91,6 +97,7 @@ public class SignupLoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.btnLogin);
         loadingProgressBar = findViewById(R.id.loading);
+        chkRemember = findViewById(R.id.chkRemember);
     }
 
     private void ProcessLogin(String username, String password) {
@@ -101,7 +108,7 @@ public class SignupLoginActivity extends AppCompatActivity {
                     String username1 = snapshot.child("username").getValue(String.class);
                     String password1 = snapshot.child("password").getValue(String.class);
                     String created = snapshot.child("createTime").getValue(String.class);
-                            UserModel userModel = snapshot.getValue(UserModel.class);
+                    UserModel userModel = snapshot.getValue(UserModel.class);
                     if (password1.equalsIgnoreCase(password)) {
                         loadingProgressBar.setVisibility(View.GONE);
                         StaticUtilities.StoreLoggedUsername(SignupLoginActivity.this, username);

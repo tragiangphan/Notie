@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
 
     tools:context=".SignupLoginActivity">
 
@@ -56,36 +56,55 @@
                 android:orientation="vertical"
                 android:padding="20sp">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_corners_stroke"
-                    android:hint="Username: rivertea"
-                    android:textSize="22sp"
-                    android:padding="15dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/whitney_medium"
-                    android:inputType="textEmailAddress"
-                    android:drawableLeft="@drawable/ic_email_24px"
-                    android:drawablePadding="10dp"/>
+                    android:hint="Username: rivertea"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/Primary"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
+                    app:startIconDrawable="@drawable/ic_email_24px"
+                    app:endIconMode="clear_text">
 
-                <EditText
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/password"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/shape_corners_stroke"
-                    android:hint="Password: rivertea"
-                    android:textSize="22sp"
-                    android:padding="15dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/whitney_medium"
-                    android:inputType="textPassword"
-                    android:layout_marginTop="5dp"
-                    android:drawableLeft="@drawable/ic_lock_24px"
-                    android:drawablePadding="10dp"/>
+                    android:hint="Password: rivertea"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/Primary"
+                    app:boxStrokeWidth="2dp"
+                    app:boxStrokeWidthFocused="3dp"
+                    app:startIconDrawable="@drawable/ic_lock_24px"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:inputType="textPassword"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -94,7 +113,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/chkAgree"
+                        android:id="@+id/chkRemember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
@@ -108,8 +127,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_weight="1"
                         android:layout_marginEnd="5sp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/whitney_semibolditalic"
                         android:gravity="end"
                         android:text="Forgot password?"
@@ -123,11 +142,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15sp"
                     android:background="@drawable/shape_corners"
+                    android:fontFamily="@font/whitney_bold"
                     android:paddingLeft="20sp"
                     android:paddingRight="20sp"
-                    android:fontFamily="@font/whitney_bold"
-                    android:textColor="@color/OnSecondaryContainer"
-                    android:text="Sign In" />
+                    android:text="Sign In"
+                    android:textColor="@color/OnSecondaryContainer" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Don't have an account? "
+                        android:fontFamily="@font/whitney_medium"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/btnSignUpDirect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign Up"
+                        android:fontFamily="@font/whitney_semibolditalic"
+                        android:textSize="16sp"
+                        android:textColor="@color/SecondaryContainer"/>
+                </LinearLayout>
             </LinearLayout>
 
             <ProgressBar

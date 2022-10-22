@@ -16,21 +16,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class ViewNoteActivity extends AppCompatActivity {
     String id, noteTitle, noteSubTitle, noteContent, createTime;
     TextView txtCreateTime;
-    ActionBar actionBar;
     FloatingActionButton fabSave;
     EditText txtNoteTitle, txtNoteSubtitle, txtNoteContent;
     LinearLayout toolBigger, toolSmaller, toolUnderline, toolBold, toolItalic, toolStrike, toolAddPhoto, layoutAddImage;
     ImageView newImgView;
     Uri imageUri;
+    MaterialToolbar materialToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     private void setControl() {
         setTitle("Edit Note");
+        materialToolbar = findViewById(R.id.toolbarEdit);
         txtNoteTitle = findViewById(R.id.noteTitle);
         txtNoteSubtitle = findViewById(R.id.noteSubtitle);
         txtNoteContent = findViewById(R.id.noteContent);
@@ -55,7 +58,6 @@ public class ViewNoteActivity extends AppCompatActivity {
         toolStrike = findViewById(R.id.btnStrikethrough);
         toolAddPhoto = findViewById(R.id.btnAddPhoto);
         layoutAddImage = findViewById(R.id.layoutAddImage);
-
     }
 
     private void setEvent() {
@@ -70,6 +72,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         toolBigger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toolBigger.setBackgroundColor(getColor(R.color.OnSecondary));
                 float textSize = txtNoteContent.getTextSize();
                 txtNoteContent.setTextSize(0, txtNoteContent.getTextSize() + 2.0f);
 //                Toast.makeText(CreateNoteActivity.this, "Size is clicked", Toast.LENGTH_SHORT).show();
@@ -181,17 +184,13 @@ public class ViewNoteActivity extends AppCompatActivity {
     }
 
     private void turnBack() {
-        actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        setSupportActionBar(materialToolbar);
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void setNoteData() {
@@ -224,6 +223,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     private void savedNote(String id, String title, String subtitle, String content) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels");
+        // set data for new note model
         NoteModel noteModel = new NoteModel(id, title, subtitle, content, new Date().toString());
         databaseReference.child(id).setValue(noteModel);
         startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));

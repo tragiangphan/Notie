@@ -17,8 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
     FloatingActionButton fabCreateNote;
     DatabaseReference databaseReference;
 
-
-    Toolbar toolbar;
+    MaterialToolbar toolbar;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
         FetchingData();
         setEvent();
 
-        //        Check First Item in Navbar
+        //  Check First Item in Navbar
         if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_notes);
         }
@@ -68,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-
             case R.id.nav_add_note:
                 Intent editDirect = new Intent(MainActivity.this, CreateNoteActivity.class);
                 startActivity(editDirect);
@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
                 break;
         }
 
+
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -96,15 +98,23 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.btnLogOut) {
+            Intent intent = new Intent(MainActivity.this, SignupLoginActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private void ToggleNavbar() {
         setSupportActionBar(toolbar);
+        // Show memubar icon
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        // Set open/close for drawer navigation
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(toggle);
+        // Synchronized drawer navigation
         toggle.syncState();
     }
 
@@ -121,9 +131,11 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
 
     private void FetchingData() {
         databaseReference.child(StaticUtilities.getUsername(MainActivity.this)).child("noteModels").addValueEventListener(new ValueEventListener() {
+            // saved change on database (each snapshot)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    // query data for each attribute return strings
                     String id = dataSnapshot.child("id").getValue(String.class);
                     String noteTitle = dataSnapshot.child("noteTitle").getValue(String.class);
                     String noteSubtitle = dataSnapshot.child("noteSubtitle").getValue(String.class);
@@ -133,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
                 }
                 setAdapter();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

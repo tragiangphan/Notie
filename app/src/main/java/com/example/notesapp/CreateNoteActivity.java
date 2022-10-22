@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,7 +25,7 @@ import java.util.Date;
 public class CreateNoteActivity extends AppCompatActivity {
     FloatingActionButton fabSave;
     EditText editTitle, editSubtitle, editContent;
-    ActionBar actionBar;
+    MaterialToolbar materialToolbar;
 
     LinearLayout toolBigger, toolSmaller, toolUnderline, toolBold, toolItalic, toolStrike, toolAddPhoto, layoutAddImage;
     ImageView newImgView;
@@ -159,9 +160,13 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void turnBack() {
-        actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(materialToolbar);
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -194,6 +199,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private void setControl() {
         setTitle("Create Note");
+        materialToolbar = findViewById(R.id.toolbarCreate);
         fabSave = findViewById(R.id.fabSavedNote);
         editTitle = findViewById(R.id.noteTitle);
         editSubtitle = findViewById(R.id.editNoteSubtitle);

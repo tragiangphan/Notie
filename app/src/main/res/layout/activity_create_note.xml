@@ -8,10 +8,25 @@
     android:orientation="vertical"
     tools:context=".ViewNoteActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarCreate"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:paddingStart="2sp"
+        android:paddingEnd="2sp"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        app:menu="@menu/toolbar_view_note"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight"
+        app:title="Create Note"
+        app:titleTextColor="@color/dark"
+        app:navigationIcon="@drawable/ic_back_ios_24px"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:paddingStart="20sp"
         android:paddingEnd="20sp">
 
@@ -56,7 +71,7 @@
                         android:layout_weight="5"
                         android:onClick="mark"
                         android:src="@drawable/ic_bookmark_24px"
-                        android:padding="7dp"
+                        android:padding="10dp"
                         app:tint="@color/grey" />
                 </LinearLayout>
 

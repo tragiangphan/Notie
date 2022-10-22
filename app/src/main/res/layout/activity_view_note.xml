@@ -8,10 +8,26 @@
     android:orientation="vertical"
     tools:context=".ViewNoteActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarEdit"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:paddingStart="2sp"
+        android:paddingEnd="2sp"
+        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        app:menu="@menu/toolbar_view_note"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight"
+        app:title="Edit Note"
+        app:titleTextColor="@color/dark"
+        app:navigationIcon="@drawable/ic_back_ios_24px"
+        android:elevation="10dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:paddingStart="20sp"
         android:paddingEnd="20sp">
 
@@ -20,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animateLayoutChanges="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,105 +118,112 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:elevation="12dp"
-                android:padding="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_marginTop="20dp">
+                android:layout_marginTop="20dp"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="7dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnBigger"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_text_increase_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnBigger"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_text_increase_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnSmaller"
-                    android:layout_weight="1">
-                    <ImageView
-
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_text_decrease_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnSmaller"
+                        android:layout_weight="1">
+                        <ImageView
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnBold"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_text_decrease_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_bold_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnBold"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_bold_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnItalic"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_italic_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnItalic"
+                        android:layout_weight="1">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnUnderline"
-                    android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_italic_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_underlined_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnUnderline"
+                        android:layout_weight="1">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnStrikethrough"
-                    android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_underlined_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_strikethrough_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnStrikethrough"
+                        android:layout_weight="1">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnAddPhoto"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_strikethrough_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_add_photo_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
+                        android:id="@+id/btnAddPhoto"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_add_photo_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
 
-            </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
 
             <ScrollView
                 android:layout_width="match_parent"
