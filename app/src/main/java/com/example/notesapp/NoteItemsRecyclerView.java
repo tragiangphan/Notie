@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class NoteItemsRecyclerView extends RecyclerView.Adapter {
@@ -83,11 +84,13 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
         });
 
         // retrieve image from firebase
-        Picasso.get()
-                .load(noteModelList.get(position).getImageURL())
-                .resize(400, 0)
-                .centerCrop()
-                .into(noteViewHolder.noteImage);
+        if (!Objects.equals(noteModelList.get(position).getImageURL(), "")) {
+            Picasso.get()
+                    .load(noteModelList.get(position).getImageURL())
+                    .resize(350, 0)
+                    .centerCrop()
+                    .into(noteViewHolder.noteImage);
+        }
     }
 
     @Override

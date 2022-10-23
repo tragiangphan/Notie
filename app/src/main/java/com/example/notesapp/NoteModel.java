@@ -18,7 +18,7 @@ public class NoteModel {
         this.noteSubtitle = noteSubtitle;
         this.noteContent = noteContent;
         this.createTime = createTime;
-        this.imageURL = imageURL;
+        this.imageURL = imageURL == null ? "" : imageURL;
     }
 
     public String getId() {

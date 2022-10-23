@@ -169,8 +169,8 @@ public class CreateNoteActivity extends AppCompatActivity {
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newImgView2 = new ImageView(CreateNoteActivity.this);
-                layoutAddImage.addView(newImgView2);
+                newImgView = new ImageView(CreateNoteActivity.this);
+                layoutAddImage.addView(newImgView);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.CAMERA)
                             == PackageManager.PERMISSION_DENIED ||
@@ -197,10 +197,10 @@ public class CreateNoteActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "new image");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
-        imageTakePhoto = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        camIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageTakePhoto);
+        camIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(camIntent, CAPTURE_CODE);
     }
 
@@ -239,7 +239,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 //            imageAddPhoto.clearColorFilter();
         }
         if(resultCode == RESULT_OK && requestCode == CAPTURE_CODE){
-            newImgView2.setImageURI(imageTakePhoto);
+            newImgView.setImageURI(imageUri);
         }
     }
 
@@ -286,7 +286,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                                             editTitle.getText().toString(),
                                             editSubtitle.getText().toString(),
                                             editContent.getText().toString(),
-                                            new SimpleDateFormat("MMM dd yyyy").format(new Date()),
+                                            new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
                                             uri.toString());
 
                                     noteDatabase.child(id).setValue(noteModel);
@@ -297,51 +297,18 @@ public class CreateNoteActivity extends AppCompatActivity {
                     });
         }
         else {
-            Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
+            // set data for new note model without image
+            String id = noteDatabase.push().getKey();
+            @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
+                    editTitle.getText().toString(),
+                    editSubtitle.getText().toString(),
+                    editContent.getText().toString(),
+                    new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
+                    "");
+            noteDatabase.child(id).setValue(noteModel);
+            startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
         }
 
-        // photo from camera
-        if (imageTakePhoto != null) {
-            StorageReference storageReference1 = imageStorage.child(System.currentTimeMillis() + "." + GetFileExtension(imageTakePhoto));
-            storageReference1.putFile(imageTakePhoto)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    String id = noteDatabase.push().getKey();
-
-                                    @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
-                                            editTitle.getText().toString(),
-                                            editSubtitle.getText().toString(),
-                                            editContent.getText().toString(),
-                                            new SimpleDateFormat("MMM dd yyyy").format(new Date()),
-                                            uri.toString());
-
-                                    noteDatabase.child(id).setValue(noteModel);
-                                    startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
-                                }
-                            });
-                        }
-                    });
-        }
-        else {
-            Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
-        }
-
-//        else {
-//            // set data for new note model
-//            String id = noteDatabase.push().getKey();
-//            NoteModel noteModel = new NoteModel(id,
-//                    editTitle.getText().toString(),
-//                    editSubtitle.getText().toString(),
-//                    editContent.getText().toString(),
-//                    new Date().toString(),
-//                    " ");
-//            noteDatabase.child(id).setValue(noteModel);
-//            startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
-//        }
     }
 
     private String GetFileExtension(Uri imageUri) {

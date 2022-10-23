@@ -4,16 +4,20 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,7 +38,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,6 +53,7 @@ public class ViewNoteActivity extends AppCompatActivity {
     private static final int PERMISSION_CODE = 123;
     private static final int CAPTURE_CODE = 1001;
     MaterialToolbar materialToolbar;
+    AlertDialog alertDelete;
 
     // Upload img
     DatabaseReference noteDatabase;
@@ -95,6 +100,53 @@ public class ViewNoteActivity extends AppCompatActivity {
         setNoteData();
         saveBtn();
         toolModified();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_view_note, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.btnDelete) {
+            showAlertDelete();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showAlertDelete() {
+        if (alertDelete == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ViewNoteActivity.this);
+
+            View view = LayoutInflater.from(this).inflate(R.layout.delete_alert_dialog,
+                    (ViewGroup) findViewById(R.id.deleteDialog));
+
+            builder.setView(view);
+            alertDelete = builder.create();
+            if (alertDelete.getWindow() != null) {
+                alertDelete.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            view.findViewById(R.id.txtDeleteNote).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(ViewNoteActivity.this, "Note Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ViewNoteActivity.this, MainActivity.class);
+                    noteDatabase.child(id).removeValue();
+                    startActivity(intent);
+                }
+            });
+
+            view.findViewById(R.id.txtCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertDelete.dismiss();
+                }
+            });
+        }
+        alertDelete.show();
     }
 
     private void toolModified() {
@@ -197,22 +249,15 @@ public class ViewNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 newImgView = new ImageView(ViewNoteActivity.this);
+                layoutAddImage.removeView(displayImage);
                 layoutAddImage.addView(newImgView);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.CAMERA)
-                            == PackageManager.PERMISSION_DENIED ||
-                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                    == PackageManager.PERMISSION_DENIED
-                    ){
-                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-                        requestPermissions(permission, PERMISSION_CODE);
-                    }
-                    else{
-                        openCamera();
-                    }
-                }
-                else{
+                if (checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED ||
+                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_DENIED) {
+                    String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                    requestPermissions(permission, PERMISSION_CODE);
+                } else {
                     openCamera();
                 }
             }
@@ -235,18 +280,17 @@ public class ViewNoteActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode){
+        switch (requestCode) {
             case PERMISSION_CODE:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openCamera();
-                }
-                else{
+                } else {
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
                 }
         }
     }
 
-    //select photo
+    // select photo
     private void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -256,7 +300,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     }
 
-    //nhan ket qua tra ve tu activity tren
+    // nhan ket qua tra ve tu activity tren
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -265,7 +309,7 @@ public class ViewNoteActivity extends AppCompatActivity {
             newImgView.setImageURI(imageUri);
 //            imageAddPhoto.clearColorFilter();
         }
-        if(resultCode == RESULT_OK && requestCode == CAPTURE_CODE){
+        if (resultCode == RESULT_OK && requestCode == CAPTURE_CODE) {
             newImgView.setImageURI(imageUri);
         }
     }
@@ -332,8 +376,7 @@ public class ViewNoteActivity extends AppCompatActivity {
                             });
                         }
                     });
-        }
-        else {
+        } else {
             Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
         }
 

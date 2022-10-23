@@ -42,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10dp"
-                    tools:listitem="@layout/note_row" />
+                    tools:listitem="@layout/note_row"
+                    android:layout_marginBottom="20dp"/>
 
             </androidx.cardview.widget.CardView>
 
