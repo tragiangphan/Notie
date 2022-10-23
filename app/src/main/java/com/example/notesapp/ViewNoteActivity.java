@@ -1,12 +1,17 @@
 package com.example.notesapp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -15,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,9 +40,11 @@ public class ViewNoteActivity extends AppCompatActivity {
     TextView txtCreateTime;
     FloatingActionButton fabSave;
     EditText txtNoteTitle, txtNoteSubtitle, txtNoteContent;
-    LinearLayout toolBigger, toolSmaller, toolUnderline, toolBold, toolItalic, toolStrike, toolAddPhoto, layoutAddImage;
-    ImageView newImgView, noteImage;
-    Uri imageUri;
+    LinearLayout toolBigger, toolSmaller, toolUnderline, toolBold, toolItalic, toolStrike, toolAddPhoto, layoutAddImage, btnTakePhoto;
+    ImageView newImgView, newImgView2, noteImage;
+    Uri imageUri, imageTakePhoto;
+    private static final int PERMISSION_CODE = 123;
+    private static final int CAPTURE_CODE = 1001;
     MaterialToolbar materialToolbar;
 
     // Upload img
@@ -74,6 +82,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         toolStrike = findViewById(R.id.btnStrikethrough);
         toolAddPhoto = findViewById(R.id.btnAddPhoto);
         layoutAddImage = findViewById(R.id.layoutAddImage);
+        btnTakePhoto = findViewById(R.id.btnTakePhoto);
     }
 
     private void setEvent() {
@@ -180,6 +189,58 @@ public class ViewNoteActivity extends AppCompatActivity {
 
             }
         });
+
+        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newImgView2 = new ImageView(ViewNoteActivity.this);
+                layoutAddImage.addView(newImgView2);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.CAMERA)
+                            == PackageManager.PERMISSION_DENIED ||
+                            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    == PackageManager.PERMISSION_DENIED
+                    ){
+                        String [] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                        requestPermissions(permission, PERMISSION_CODE);
+                    }
+                    else{
+                        openCamera();
+                    }
+                }
+                else{
+                    openCamera();
+                }
+            }
+        });
+
+    }
+
+    private void openCamera() {
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "new image");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
+        imageTakePhoto = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        camIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageTakePhoto);
+        startActivityForResult(camIntent, CAPTURE_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode){
+            case PERMISSION_CODE:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openCamera();
+                }
+                else{
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+        }
     }
 
     //select photo
@@ -200,6 +261,9 @@ public class ViewNoteActivity extends AppCompatActivity {
             imageUri = data.getData();
             newImgView.setImageURI(imageUri);
 //            imageAddPhoto.clearColorFilter();
+        }
+        if(resultCode == RESULT_OK && requestCode == CAPTURE_CODE){
+            newImgView2.setImageURI(imageTakePhoto);
         }
     }
 
