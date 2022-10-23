@@ -14,15 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
+        android:elevation="10dp"
         android:paddingStart="2sp"
         android:paddingEnd="2sp"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
         app:menu="@menu/toolbar_view_note"
+        app:navigationIcon="@drawable/ic_back_ios_24px"
         app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight"
         app:title="Edit Note"
-        app:titleTextColor="@color/dark"
-        app:navigationIcon="@drawable/ic_back_ios_24px"
-        android:elevation="10dp"/>
+        app:titleTextColor="@color/dark" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,22 +35,22 @@
             android:id="@+id/layoutMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:animateLayoutChanges="true"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:orientation="vertical"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/noteTitle"
@@ -58,14 +58,14 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:background="@drawable/shape_corners"
                         android:fontFamily="@font/whitney_bold"
+                        android:hint="Note Title"
                         android:importantForAutofill="no"
                         android:includeFontPadding="false"
                         android:textColor="@color/dark"
                         android:textSize="25sp"
-                        android:hint="Note Title"
-                        tools:ignore="NestedWeights"
-                        android:background="@drawable/shape_corners"/>
+                        tools:ignore="NestedWeights" />
 
                     <ImageView
                         android:id="@+id/imageMark"
@@ -73,23 +73,24 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:onClick="mark"
-                        android:src="@drawable/ic_bookmark_24px"
                         android:padding="2dp"
+                        android:src="@drawable/ic_bookmark_24px"
                         app:tint="@color/grey" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/createTime"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/whitney_semibold"
-                    android:text="12 Oct 2022"
                     android:layout_weight="1"
+                    android:fontFamily="@font/whitney_semibold"
                     android:importantForAutofill="no"
                     android:includeFontPadding="false"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
+                    android:text="12 Oct 2022"
                     android:textColor="@color/grey"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -107,6 +108,7 @@
                     android:id="@+id/noteSubtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/light_grey"
                     android:fontFamily="@font/whitney_semibold"
                     android:hint="Note Subtitle"
                     android:importantForAutofill="no"
@@ -115,7 +117,6 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:textColor="@color/dark"
-                    android:background="@color/light_grey"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -123,10 +124,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="20dp"
-                app:cardElevation="10dp"
-                app:cardCornerRadius="7dp">
+                android:layout_marginEnd="5dp"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,104 +136,109 @@
                     android:padding="5dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnBigger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_text_increase_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_text_increase_24px" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnSmaller"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
 
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_text_decrease_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_text_decrease_24px" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_bold_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_bold_24px" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnItalic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_italic_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_italic_24px" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnUnderline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_underlined_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_underlined_24px" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnStrikethrough"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_strikethrough_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_strikethrough_24px" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:id="@+id/btnAddPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_add_photo_24px"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_add_photo_24px" />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/btnTakePhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/btnTakePhoto"
                         android:layout_weight="1">
+
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/camera_plus_svgrepo_com"
-                            app:tint="#838383"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_camera_plus"
+                            app:tint="#757575" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -243,8 +249,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                android:paddingBottom="10dp"
-                android:minHeight="200dp">
+                android:minHeight="200dp"
+                android:paddingBottom="10dp">
 
                 <EditText
                     android:id="@+id/noteContent"
@@ -257,9 +263,9 @@
                     android:importantForAutofill="no"
                     android:includeFontPadding="false"
                     android:minHeight="200dp"
+                    android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:padding="10dp" />
+                    android:textSize="18sp" />
             </ScrollView>
 
             <LinearLayout
@@ -267,6 +273,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/displayImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
             </LinearLayout>
 
         </LinearLayout>

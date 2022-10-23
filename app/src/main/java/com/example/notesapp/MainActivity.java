@@ -163,12 +163,13 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
 
     @Override
     public void onClickItem(NoteModel noteModel) {
-        Intent intent = new Intent(MainActivity.this, ViewNoteActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ViewNoteActivity.class);
         intent.putExtra(Constants.id, noteModel.getId());
         intent.putExtra(Constants.noteTitle, noteModel.getNoteTitle());
         intent.putExtra(Constants.noteSubtitle, noteModel.getNoteSubtitle());
         intent.putExtra(Constants.noteContent, noteModel.getNoteContent());
         intent.putExtra(Constants.createTime, noteModel.getCreateTime());
+        intent.putExtra(Constants.imageURL, noteModel.getImageURL());
         startActivity(intent);
     }
 }

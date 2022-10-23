@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -31,18 +32,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ViewNoteActivity extends AppCompatActivity {
-    String id, noteTitle, noteSubTitle, noteContent, createTime;
+    String id, noteTitle, noteSubTitle, noteContent, createTime, noteImages;
     TextView txtCreateTime;
     FloatingActionButton fabSave;
     EditText txtNoteTitle, txtNoteSubtitle, txtNoteContent;
     LinearLayout toolBigger, toolSmaller, toolUnderline, toolBold, toolItalic, toolStrike, toolAddPhoto, layoutAddImage, btnTakePhoto;
-    ImageView newImgView, newImgView2, noteImage;
-    Uri imageUri, imageTakePhoto;
+    ImageView newImgView, noteImage, displayImage;
+    Uri imageUri;
     private static final int PERMISSION_CODE = 123;
     private static final int CAPTURE_CODE = 1001;
     MaterialToolbar materialToolbar;
@@ -83,6 +86,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         toolAddPhoto = findViewById(R.id.btnAddPhoto);
         layoutAddImage = findViewById(R.id.layoutAddImage);
         btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        displayImage = findViewById(R.id.displayImage);
     }
 
     private void setEvent() {
@@ -110,17 +114,6 @@ public class ViewNoteActivity extends AppCompatActivity {
                 float textSize = txtNoteContent.getTextSize();
                 txtNoteContent.setTextSize(0, txtNoteContent.getTextSize() - 2.0f);
 //                Toast.makeText(CreateNoteActivity.this, "Size is clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        toolAddPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newImgView = new ImageView(ViewNoteActivity.this);
-                layoutAddImage.addView(newImgView);
-                openGallery();
-
-//                Toast.makeText(CreateNoteActivity.this, "Add photo is clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -190,11 +183,21 @@ public class ViewNoteActivity extends AppCompatActivity {
             }
         });
 
+        toolAddPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newImgView = new ImageView(ViewNoteActivity.this);
+                layoutAddImage.removeView(displayImage);
+                layoutAddImage.addView(newImgView);
+                openGallery();
+            }
+        });
+
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newImgView2 = new ImageView(ViewNoteActivity.this);
-                layoutAddImage.addView(newImgView2);
+                newImgView = new ImageView(ViewNoteActivity.this);
+                layoutAddImage.addView(newImgView);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.CAMERA)
                             == PackageManager.PERMISSION_DENIED ||
@@ -221,10 +224,10 @@ public class ViewNoteActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "new image");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the camera");
-        imageTakePhoto = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        camIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageTakePhoto);
+        camIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(camIntent, CAPTURE_CODE);
     }
 
@@ -263,7 +266,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 //            imageAddPhoto.clearColorFilter();
         }
         if(resultCode == RESULT_OK && requestCode == CAPTURE_CODE){
-            newImgView2.setImageURI(imageTakePhoto);
+            newImgView.setImageURI(imageUri);
         }
     }
 
@@ -282,6 +285,9 @@ public class ViewNoteActivity extends AppCompatActivity {
         txtNoteSubtitle.setText(noteSubTitle);
         txtNoteContent.setText(noteContent);
         txtCreateTime.setText(createTime);
+        Picasso.get()
+                .load(noteImages)
+                .into(displayImage);
     }
 
     private void getNoteData() {
@@ -290,6 +296,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         noteSubTitle = getIntent().getStringExtra(Constants.noteSubtitle);
         noteContent = getIntent().getStringExtra(Constants.noteContent);
         createTime = getIntent().getStringExtra(Constants.createTime);
+        noteImages = getIntent().getStringExtra(Constants.imageURL);
     }
 
     private void saveBtn() {
@@ -302,6 +309,7 @@ public class ViewNoteActivity extends AppCompatActivity {
     }
 
     private void saveNoteDetail() {
+        // photo from gallery
         if (imageUri != null) {
             StorageReference storageReference1 = imageStorage.child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
             storageReference1.putFile(imageUri)
@@ -328,6 +336,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
         }
+
 //        else {
 //            // set data for new note model
 //            NoteModel noteModel = new NoteModel(id,

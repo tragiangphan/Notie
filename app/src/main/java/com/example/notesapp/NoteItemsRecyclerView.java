@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,9 +23,9 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
     NoteClickListener noteClickListener;
     int[] colors = {
             R.color.light_blue,
+            R.color.light_red,
             R.color.light_green,
             R.color.light_orange,
-            R.color.light_red,
             R.color.light_yellow
     };
 
@@ -82,7 +84,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
 
         // retrieve image from firebase
         Picasso.get()
-                .load(noteModelList.get(position).getimageURL())
+                .load(noteModelList.get(position).getImageURL())
                 .resize(400, 0)
                 .centerCrop()
                 .into(noteViewHolder.noteImage);
@@ -92,4 +94,6 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
     public int getItemCount() {
         return noteModelList.size();
     }
+
+
 }

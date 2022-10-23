@@ -299,6 +299,37 @@ public class CreateNoteActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
         }
+
+        // photo from camera
+        if (imageTakePhoto != null) {
+            StorageReference storageReference1 = imageStorage.child(System.currentTimeMillis() + "." + GetFileExtension(imageTakePhoto));
+            storageReference1.putFile(imageTakePhoto)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String id = noteDatabase.push().getKey();
+
+                                    @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
+                                            editTitle.getText().toString(),
+                                            editSubtitle.getText().toString(),
+                                            editContent.getText().toString(),
+                                            new SimpleDateFormat("MMM dd yyyy").format(new Date()),
+                                            uri.toString());
+
+                                    noteDatabase.child(id).setValue(noteModel);
+                                    startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
+                                }
+                            });
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
+        }
+
 //        else {
 //            // set data for new note model
 //            String id = noteDatabase.push().getKey();

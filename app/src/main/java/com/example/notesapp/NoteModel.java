@@ -61,11 +61,11 @@ public class NoteModel {
         this.createTime = createTime;
     }
 
-    public String getimageURL() {
+    public String getImageURL() {
         return imageURL;
     }
 
-    public void setimageURL(String imageURL) {
+    public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 }

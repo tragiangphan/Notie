@@ -212,8 +212,8 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/camera_plus_svgrepo_com"
-                            app:tint="#838383"
+                            android:src="@drawable/ic_camera_plus"
+                            app:tint="#757575"
                             android:padding="5dp"/>
                     </LinearLayout>
 

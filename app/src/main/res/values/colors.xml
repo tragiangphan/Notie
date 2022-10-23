@@ -8,11 +8,11 @@
     <color name="dark">#FF222222</color>
     <color name="grey">#A0A0A0</color>
     <color name="light_grey">#EBEBEB</color>
-    <color name="light_red">#FFDCDC</color>
+    <color name="light_red">#FFF2F2</color>
     <color name="light_blue">#DCDCFF</color>
     <color name="light_yellow">#FFFDDE</color>
     <color name="light_green">#DCFFDC</color>
-    <color name="light_orange">#FFF0E6</color>
+    <color name="light_orange">#FFECC7</color>
     <color name="light">#FFDADDFC</color>
     <!--    Logo-->
     <color name="ic_launcher_background">#FFFFFF</color>
