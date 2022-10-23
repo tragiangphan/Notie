@@ -51,6 +51,7 @@
                     android:orientation="horizontal"
                     android:layout_weight="1"
                     android:gravity="center">
+
                     <EditText
                         android:id="@+id/noteTitle"
                         android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                         android:importantForAutofill="no"
                         android:includeFontPadding="false"
                         android:textColor="@color/dark"
-                        android:textSize="30sp"
+                        android:textSize="25sp"
                         android:hint="Note Title"
                         tools:ignore="NestedWeights"
                         android:background="@drawable/shape_corners"/>

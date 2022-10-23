@@ -1,9 +1,7 @@
 package com.example.notesapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -11,15 +9,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CreateNoteActivity extends AppCompatActivity {
@@ -31,12 +40,21 @@ public class CreateNoteActivity extends AppCompatActivity {
     ImageView newImgView;
     Uri imageUri;
 
+    DatabaseReference noteDatabase;
+    StorageReference imageStorage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+        setDatabase();
         setControl();
         setEvent();
+    }
+
+    private void setDatabase() {
+        imageStorage = FirebaseStorage.getInstance().getReference("images");
+        noteDatabase = FirebaseDatabase.getInstance().getReference("users").child(StaticUtilities.getUsername(CreateNoteActivity.this)).child("noteModels");
     }
 
     private void setEvent() {
@@ -77,14 +95,15 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         toolBold.setOnClickListener(new View.OnClickListener() {
             int flag3 = 0;
+
             @Override
             public void onClick(View view) {
                 if (flag3 == 0) {
-                    Typeface tf= Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_bold.otf");
+                    Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_bold.otf");
                     editContent.setTypeface(tf);
                     flag3 = 1;
                 } else if (flag3 == 1) {
-                    Typeface tf= Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_medium.otf");
+                    Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_medium.otf");
                     editContent.setTypeface(tf);
                     flag3 = 0;
                 }
@@ -94,14 +113,15 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         toolItalic.setOnClickListener(new View.OnClickListener() {
             int flag4 = 0;
+
             @Override
             public void onClick(View view) {
                 if (flag4 == 0) {
-                    Typeface tf= Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_mediumitalic.otf");
+                    Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_mediumitalic.otf");
                     editContent.setTypeface(tf);
                     flag4 = 1;
                 } else if (flag4 == 1) {
-                    Typeface tf= Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_medium.otf");
+                    Typeface tf = Typeface.createFromAsset(getApplicationContext().getAssets(), "whitney_medium.otf");
                     editContent.setTypeface(tf);
                     flag4 = 0;
                 }
@@ -110,6 +130,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         toolUnderline.setOnClickListener(new View.OnClickListener() {
             int flag5 = 0;
+
             @Override
             public void onClick(View view) {
                 if (flag5 == 0) {
@@ -124,6 +145,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         toolStrike.setOnClickListener(new View.OnClickListener() {
             int flag6 = 0;
+
             @Override
             public void onClick(View view) {
                 if (flag6 == 0) {
@@ -181,20 +203,58 @@ public class CreateNoteActivity extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                savedNote(
-                        editTitle.getText().toString(),
-                        editSubtitle.getText().toString(),
-                        editContent.getText().toString());
+                saveNoteDetail();
             }
         });
     }
 
-    private void savedNote(String title, String subtitle, String content) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(StaticUtilities.getUsername(CreateNoteActivity.this)).child("noteModels");
-        String id = databaseReference.push().getKey();
-        NoteModel noteModel = new NoteModel(id, title, subtitle, content, new Date().toString());
-        databaseReference.child(id).setValue(noteModel);
-        startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
+    private void saveNoteDetail() {
+        if (imageUri != null) {
+            StorageReference storageReference1 = imageStorage.child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
+            storageReference1.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String id = noteDatabase.push().getKey();
+
+                                    @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
+                                            editTitle.getText().toString(),
+                                            editSubtitle.getText().toString(),
+                                            editContent.getText().toString(),
+                                            new SimpleDateFormat("MMM dd yyyy").format(new Date()),
+                                            uri.toString());
+
+                                    noteDatabase.child(id).setValue(noteModel);
+                                    startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
+                                }
+                            });
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
+        }
+//        else {
+//            // set data for new note model
+//            String id = noteDatabase.push().getKey();
+//            NoteModel noteModel = new NoteModel(id,
+//                    editTitle.getText().toString(),
+//                    editSubtitle.getText().toString(),
+//                    editContent.getText().toString(),
+//                    new Date().toString(),
+//                    " ");
+//            noteDatabase.child(id).setValue(noteModel);
+//            startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
+//        }
+    }
+
+    private String GetFileExtension(Uri imageUri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(imageUri));
     }
 
     private void setControl() {

@@ -1,22 +1,22 @@
 package com.example.notesapp;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.Random;
 
 public class NoteItemsRecyclerView extends RecyclerView.Adapter {
-
     List<NoteModel> noteModelList;
     NoteClickListener noteClickListener;
     int[] colors = {
@@ -37,6 +37,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
     public class NoteViewHolder extends RecyclerView.ViewHolder {
 
         public TextView noteTitle, noteSubtitle, noteContent, createTime;
+        public ImageView noteImage;
         CardView noteCard;
 
         public NoteViewHolder(@NonNull View itemView) {
@@ -46,6 +47,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
             noteSubtitle = itemView.findViewById(R.id.noteSubtitle);
             noteContent = itemView.findViewById(R.id.noteContent);
             createTime = itemView.findViewById(R.id.createTime);
+            noteImage = itemView.findViewById(R.id.imgCard);
         }
     }
 
@@ -56,6 +58,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
         return new NoteViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         NoteViewHolder noteViewHolder = (NoteViewHolder) holder;
@@ -63,7 +66,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
         // Random Card Color
         Random random = new Random();
         int randomNoteColor = random.nextInt(colors.length);
-        noteViewHolder.noteCard.setCardBackgroundColor(holder.itemView.getResources().getColor(colors[randomNoteColor],null));
+        noteViewHolder.noteCard.setCardBackgroundColor(holder.itemView.getResources().getColor(colors[randomNoteColor], null));
 
         // Setting into NoteModel attribute
         noteViewHolder.noteTitle.setText(noteModelList.get(position).getNoteTitle());
@@ -76,6 +79,13 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
                 noteClickListener.onClickItem(noteModelList.get(position));
             }
         });
+
+        // retrieve image from firebase
+        Picasso.get()
+                .load(noteModelList.get(position).getimageURL())
+                .resize(400, 0)
+                .centerCrop()
+                .into(noteViewHolder.noteImage);
     }
 
     @Override

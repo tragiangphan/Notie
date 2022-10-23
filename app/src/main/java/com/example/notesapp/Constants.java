@@ -6,6 +6,7 @@ public interface Constants {
             noteTitle = "noteTitle",
             noteSubtitle = "noteSubtitle",
             noteContent = "noteContent",
-            createTime = "createTime";
+            createTime = "createTime",
+            imageURL = "imageURL";
 
 }

@@ -1,14 +1,5 @@
 package com.example.notesapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,18 +8,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NoteClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -83,8 +81,6 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
                 break;
         }
 
-
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -136,12 +132,8 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
                     // query data for each attribute return strings
-                    String id = dataSnapshot.child("id").getValue(String.class);
-                    String noteTitle = dataSnapshot.child("noteTitle").getValue(String.class);
-                    String noteSubtitle = dataSnapshot.child("noteSubtitle").getValue(String.class);
-                    String noteContent = dataSnapshot.child("noteContent").getValue(String.class);
-                    String createTime = dataSnapshot.child("createTime").getValue(String.class);
-                    noteModels.add(new NoteModel(id, noteTitle, noteSubtitle, noteContent, createTime));
+                    NoteModel noteModel = dataSnapshot.getValue(NoteModel.class);
+                    noteModels.add(noteModel);
                 }
                 setAdapter();
             }

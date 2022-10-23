@@ -1,17 +1,24 @@
 package com.example.notesapp;
 
+import androidx.annotation.Nullable;
+
 public class NoteModel {
-    String id, noteTitle, noteSubtitle, noteContent, createTime;
+    String id, noteTitle,
+            noteSubtitle,
+            noteContent,
+            createTime,
+            imageURL;
 
     public NoteModel() {
     }
 
-    public NoteModel(String id, String noteTitle, String noteSubtitle, String noteContent, String createTime) {
+    public NoteModel(String id, String noteTitle, String noteSubtitle, String noteContent, String createTime, String imageURL) {
         this.id = id;
         this.noteTitle = noteTitle;
         this.noteSubtitle = noteSubtitle;
         this.noteContent = noteContent;
         this.createTime = createTime;
+        this.imageURL = imageURL;
     }
 
     public String getId() {
@@ -52,5 +59,13 @@ public class NoteModel {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getimageURL() {
+        return imageURL;
+    }
+
+    public void setimageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

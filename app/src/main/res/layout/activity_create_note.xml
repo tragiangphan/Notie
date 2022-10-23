@@ -8,233 +8,236 @@
     android:orientation="vertical"
     tools:context=".ViewNoteActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarCreate"
-        style="@style/Widget.MaterialComponents.Toolbar.Primary"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        android:paddingStart="2sp"
-        android:paddingEnd="2sp"
-        android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
-        app:menu="@menu/toolbar_view_note"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight"
-        app:title="Create Note"
-        app:titleTextColor="@color/dark"
-        app:navigationIcon="@drawable/ic_back_ios_24px"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:paddingStart="20sp"
-        android:paddingEnd="20sp">
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarCreate"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:paddingStart="2sp"
+            android:paddingEnd="2sp"
+            android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+            app:menu="@menu/toolbar_view_note"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight"
+            app:title="Create Note"
+            app:titleTextColor="@color/dark"
+            app:navigationIcon="@drawable/ic_back_ios_24px"/>
 
         <LinearLayout
-            android:id="@+id/layoutMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical">
+            android:paddingStart="20sp"
+            android:paddingEnd="20sp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="vertical"
-                android:layout_marginBottom="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:gravity="center">
-                    <EditText
-                        android:id="@+id/noteTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/whitney_bold"
-                        android:importantForAutofill="no"
-                        android:includeFontPadding="false"
-                        android:textColor="@color/dark"
-                        android:textSize="30sp"
-                        android:hint="Note Title"
-                        tools:ignore="NestedWeights"
-                        android:background="@android:color/transparent"/>
-
-                    <ImageView
-                        android:id="@+id/imageMark"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="5"
-                        android:onClick="mark"
-                        android:src="@drawable/ic_bookmark_24px"
-                        android:padding="10dp"
-                        app:tint="@color/grey" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/viewSubtitleIndicator"
-                    android:layout_width="5dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape_bg_subtitle" />
-
-                <EditText
-                    android:id="@+id/editNoteSubtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/whitney_semibold"
-                    android:hint="Note Subtitle"
-                    android:importantForAutofill="no"
-                    android:includeFontPadding="false"
-                    android:paddingStart="15dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:textColor="@color/dark"
-                    android:background="@color/light_grey"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:elevation="12dp"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="20dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnBigger"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_text_increase_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnSmaller"
-                    android:layout_weight="1">
-                    <ImageView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_text_decrease_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnBold"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_bold_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnItalic"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_italic_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnUnderline"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_underlined_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnStrikethrough"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_strikethrough_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/btnAddPhoto"
-                    android:layout_weight="1">
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_add_photo_24px"
-                        android:padding="5dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingBottom="10dp"
-                android:minHeight="200dp">
-
-                <EditText
-                    android:id="@+id/noteContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="@font/whitney_medium"
-                    android:gravity="top"
-                    android:hint="Type note here..."
-                    android:importantForAutofill="no"
-                    android:includeFontPadding="false"
-                    android:minHeight="200dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:padding="10dp" />
-            </ScrollView>
-
-
-            <LinearLayout
-                android:id="@+id/layoutAddImage"
+                android:id="@+id/layoutMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <EditText
+                            android:id="@+id/noteTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/whitney_bold"
+                            android:textColor="@color/dark"
+                            android:textSize="25sp"
+                            android:hint="Note Title"
+                            tools:ignore="NestedWeights"
+                            android:background="@android:color/transparent"/>
+
+                        <ImageView
+                            android:id="@+id/imageMark"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="5"
+                            android:onClick="mark"
+                            android:src="@drawable/ic_bookmark_24px"
+                            android:padding="10dp"
+                            app:tint="@color/grey" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:id="@+id/viewSubtitleIndicator"
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_bg_subtitle" />
+
+                    <EditText
+                        android:id="@+id/editNoteSubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/whitney_semibold"
+                        android:hint="Note Subtitle"
+                        android:importantForAutofill="no"
+                        android:includeFontPadding="false"
+                        android:paddingStart="15dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/dark"
+                        android:background="@color/light_grey"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:elevation="12dp"
+                    android:padding="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnBigger"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_text_increase_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnSmaller"
+                        android:layout_weight="1">
+                        <ImageView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_text_decrease_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnBold"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_bold_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnItalic"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_italic_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnUnderline"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_underlined_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnStrikethrough"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_strikethrough_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btnAddPhoto"
+                        android:layout_weight="1">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_add_photo_24px"
+                            android:padding="5dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingBottom="10dp"
+                    android:minHeight="200dp">
+
+                    <EditText
+                        android:id="@+id/noteContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/whitney_medium"
+                        android:gravity="top"
+                        android:hint="Type note here..."
+                        android:importantForAutofill="no"
+                        android:includeFontPadding="false"
+                        android:minHeight="200dp"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:padding="10dp" />
+                </ScrollView>
+
+
+                <LinearLayout
+                    android:id="@+id/layoutAddImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                </LinearLayout>
+
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
