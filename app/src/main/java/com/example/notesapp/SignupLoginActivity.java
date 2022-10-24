@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -20,17 +18,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public class SignupLoginActivity extends AppCompatActivity {
     TextInputLayout usernameEditText, passwordEditText;
     Button loginButton;
     ProgressBar loadingProgressBar;
     DatabaseReference userDatabase;
     ActionBar actionBar;
-    CheckBox chkRemember;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,12 +52,9 @@ public class SignupLoginActivity extends AppCompatActivity {
     }
 
     private void checkAlreadyLogIn() {
-        if (StaticUtilities.getUsername(SignupLoginActivity.this) != null && chkRemember.isChecked()) {
-            startActivity(new Intent(SignupLoginActivity.this, MainActivity.class));
-            finish();
-        }
         if (StaticUtilities.getUsername(SignupLoginActivity.this) != null) {
             startActivity(new Intent(SignupLoginActivity.this, MainActivity.class));
+//            finish();
         }
     }
 
@@ -97,7 +87,6 @@ public class SignupLoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.btnLogin);
         loadingProgressBar = findViewById(R.id.loading);
-        chkRemember = findViewById(R.id.chkRemember);
     }
 
     private void ProcessLogin(String username, String password) {

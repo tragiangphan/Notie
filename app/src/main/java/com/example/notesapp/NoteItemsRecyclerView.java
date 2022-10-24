@@ -1,25 +1,34 @@
 package com.example.notesapp;
 
 import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.LogRecord;
 
 public class NoteItemsRecyclerView extends RecyclerView.Adapter {
+    // Search notes
+    Timer timer;
+    List<NoteModel> noteModelsSource;
+    // Show Notes
     List<NoteModel> noteModelList;
     NoteClickListener noteClickListener;
     int[] colors = {
@@ -34,6 +43,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
     public NoteItemsRecyclerView(List<NoteModel> noteModels, NoteClickListener noteClickListener) {
         this.noteModelList = noteModels;
         this.noteClickListener = noteClickListener;
+        noteModelsSource = noteModels;
     }
 
     // set control
@@ -98,5 +108,41 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
         return noteModelList.size();
     }
 
+    // Search note
+    public void searchNotes (String searchKey) {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (searchKey.trim().isEmpty()) {
+                    noteModelList = noteModelsSource;
+                } else {
+                    ArrayList<NoteModel> temp = new ArrayList<>();
+                    for (NoteModel note :
+                            noteModelsSource) {
+                        if (note.getNoteTitle().toLowerCase().contains(searchKey.toLowerCase()) ||
+                        note.getNoteSubtitle().toLowerCase().contains(searchKey.toLowerCase()) ||
+                        note.getNoteContent().toLowerCase().contains(searchKey.toLowerCase())) {
+                            temp.add(note);
+                        }
+                    }
+                    noteModelList = temp;
+                }
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                    }
+                });
+            }
+        }, 200);
+    }
+
+    public void cancelTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
 
 }

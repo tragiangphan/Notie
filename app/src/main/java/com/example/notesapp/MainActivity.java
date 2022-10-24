@@ -1,11 +1,16 @@
 package com.example.notesapp;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,11 +41,13 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
     RecyclerView noteList;
     FloatingActionButton fabCreateNote;
     DatabaseReference databaseReference;
+    NoteItemsRecyclerView noteItemsRecyclerView;
 
     MaterialToolbar toolbar;
     ActionBarDrawerToggle toggle;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
+    TextInputLayout searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
         setControl();
         FetchingData();
         setEvent();
-
         //  Check First Item in Navbar
         if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_notes);
@@ -123,6 +130,28 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
                 startActivity(intent);
             }
         });
+        SearchNotes();
+    }
+
+    private void SearchNotes() {
+        searchBar.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                noteItemsRecyclerView.cancelTimer();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (noteModels.size() != 0) {
+                    noteItemsRecyclerView.searchNotes(editable.toString());
+                }
+            }
+        });
     }
 
     private void FetchingData() {
@@ -145,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
     }
 
     private void setAdapter() {
-        NoteItemsRecyclerView noteItemsRecyclerView = new NoteItemsRecyclerView(noteModels, MainActivity.this);
+        noteItemsRecyclerView = new NoteItemsRecyclerView(noteModels, MainActivity.this);
         noteList.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         noteList.setHasFixedSize(true);
         noteList.setAdapter(noteItemsRecyclerView);
@@ -159,11 +188,12 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        searchBar = findViewById(R.id.inputSearch);
     }
 
     @Override
     public void onClickItem(NoteModel noteModel) {
-        Intent intent = new Intent(getApplicationContext(), ViewNoteActivity.class);
+        Intent intent = new Intent(this, ViewNoteActivity.class);
         intent.putExtra(Constants.id, noteModel.getId());
         intent.putExtra(Constants.noteTitle, noteModel.getNoteTitle());
         intent.putExtra(Constants.noteSubtitle, noteModel.getNoteSubtitle());

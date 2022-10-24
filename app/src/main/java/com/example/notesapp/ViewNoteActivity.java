@@ -41,6 +41,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class ViewNoteActivity extends AppCompatActivity {
     String id, noteTitle, noteSubTitle, noteContent, createTime, noteImages;
@@ -329,9 +330,11 @@ public class ViewNoteActivity extends AppCompatActivity {
         txtNoteSubtitle.setText(noteSubTitle);
         txtNoteContent.setText(noteContent);
         txtCreateTime.setText(createTime);
-        Picasso.get()
-                .load(noteImages)
-                .into(displayImage);
+        if (!Objects.equals(noteImages, "")) {
+            Picasso.get()
+                    .load(noteImages)
+                    .into(displayImage);
+        }
     }
 
     private void getNoteData() {
@@ -353,7 +356,17 @@ public class ViewNoteActivity extends AppCompatActivity {
     }
 
     private void saveNoteDetail() {
-        // photo from gallery
+//        if (!Objects.equals(noteImages, "")) {
+//            @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
+//                    txtNoteTitle.getText().toString(),
+//                    txtNoteSubtitle.getText().toString(),
+//                    txtNoteContent.getText().toString(),
+//                    new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
+//                    noteImages);
+//            noteDatabase.child(id).setValue(noteModel);
+//            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
+//        }
+            // photo from gallery
         if (imageUri != null) {
             StorageReference storageReference1 = imageStorage.child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
             storageReference1.putFile(imageUri)
@@ -376,21 +389,27 @@ public class ViewNoteActivity extends AppCompatActivity {
                             });
                         }
                     });
-        } else {
-            Toast.makeText(this, "Image is empty!", Toast.LENGTH_SHORT).show();
+        } else if(!Objects.equals(noteImages, "")) {
+            @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
+                    txtNoteTitle.getText().toString(),
+                    txtNoteSubtitle.getText().toString(),
+                    txtNoteContent.getText().toString(),
+                    new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
+                    noteImages.toString());
+            noteDatabase.child(id).setValue(noteModel);
+            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
         }
-
-//        else {
-//            // set data for new note model
-//            NoteModel noteModel = new NoteModel(id,
-//                    txtNoteTitle.getText().toString(),
-//                    txtNoteSubtitle.getText().toString(),
-//                    txtNoteContent.getText().toString(),
-//                    new Date().toString(),
-//                    " ");
-//            noteDatabase.child(id).setValue(noteModel);
-//            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
-//        }
+        else {
+            // set data for new note model without image
+            @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
+                    txtNoteTitle.getText().toString(),
+                    txtNoteSubtitle.getText().toString(),
+                    txtNoteContent.getText().toString(),
+                    new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
+                    "");
+            noteDatabase.child(id).setValue(noteModel);
+            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
+        }
     }
 
     private String GetFileExtension(Uri imageUri) {

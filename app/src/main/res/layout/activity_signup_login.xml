@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/whitney_medium"
-                    android:hint="Username: rivertea"
+                    android:hint="Username"
                     app:boxCornerRadiusBottomEnd="10dp"
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/whitney_medium"
-                    android:hint="Password: rivertea"
+                    android:hint="Password"
                     app:boxCornerRadiusBottomEnd="10dp"
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
@@ -106,41 +106,41 @@
                         android:inputType="textPassword"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10sp"
-                    android:orientation="horizontal">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="10sp"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <CheckBox
-                        android:id="@+id/chkRemember"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/whitney_medium"
-                        android:text="Remember me"
-                        android:textSize="18sp" />
+<!--                    <CheckBox-->
+<!--                        android:id="@+id/chkRemember"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="left"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:fontFamily="@font/whitney_medium"-->
+<!--                        android:text="Remember me"-->
+<!--                        android:textSize="18sp" />-->
 
-                    <TextView
-                        android:id="@+id/txtLogin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginEnd="5sp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/whitney_semibolditalic"
-                        android:gravity="end"
-                        android:text="Forgot password?"
-                        android:textColor="@color/PrimaryContainer"
-                        android:textSize="18sp" />
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/txtLogin"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginEnd="5sp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:fontFamily="@font/whitney_semibolditalic"-->
+<!--                        android:gravity="end"-->
+<!--                        android:text="Forgot password?"-->
+<!--                        android:textColor="@color/PrimaryContainer"-->
+<!--                        android:textSize="18sp" />-->
+<!--                </LinearLayout>-->
 
                 <Button
                     android:id="@+id/btnLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15sp"
+                    android:layout_marginTop="20sp"
                     android:background="@drawable/shape_corners"
                     android:fontFamily="@font/whitney_bold"
                     android:paddingLeft="20sp"
@@ -148,28 +148,28 @@
                     android:text="Sign In"
                     android:textColor="@color/OnSecondaryContainer" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_margin="10dp">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:layout_margin="10dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Don't have an account? "
-                        android:fontFamily="@font/whitney_medium"
-                        android:textSize="16sp"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Don't have an account? "-->
+<!--                        android:fontFamily="@font/whitney_medium"-->
+<!--                        android:textSize="16sp"/>-->
 
-                    <TextView
-                        android:id="@+id/btnSignUpDirect"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sign Up"
-                        android:fontFamily="@font/whitney_semibolditalic"
-                        android:textSize="16sp"
-                        android:textColor="@color/SecondaryContainer"/>
-                </LinearLayout>
+<!--                    <TextView-->
+<!--                        android:id="@+id/btnSignUpDirect"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Sign Up"-->
+<!--                        android:fontFamily="@font/whitney_semibolditalic"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/SecondaryContainer"/>-->
+<!--                </LinearLayout>-->
             </LinearLayout>
 
             <ProgressBar
