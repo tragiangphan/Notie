@@ -9,4 +9,8 @@ public interface Constants {
             createTime = "createTime",
             imageURL = "imageURL";
 
+    String username = "username";
+
+    String naviItem = "naviItem";
+
 }

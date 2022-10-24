@@ -323,6 +323,9 @@ public class ViewNoteActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Constants.naviItem, "");
+        startActivity(intent);
     }
 
     private void setNoteData() {
@@ -356,17 +359,7 @@ public class ViewNoteActivity extends AppCompatActivity {
     }
 
     private void saveNoteDetail() {
-//        if (!Objects.equals(noteImages, "")) {
-//            @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(id,
-//                    txtNoteTitle.getText().toString(),
-//                    txtNoteSubtitle.getText().toString(),
-//                    txtNoteContent.getText().toString(),
-//                    new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
-//                    noteImages);
-//            noteDatabase.child(id).setValue(noteModel);
-//            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
-//        }
-            // photo from gallery
+        // photo from gallery
         if (imageUri != null) {
             StorageReference storageReference1 = imageStorage.child(System.currentTimeMillis() + "." + GetFileExtension(imageUri));
             storageReference1.putFile(imageUri)

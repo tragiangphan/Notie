@@ -15,8 +15,4 @@ public class StaticUtilities {
         SharedPreferences sharedPreferences = context.getSharedPreferences("NotePref", 0);
         return sharedPreferences.getString("username", null);
     }
-
-    public static int codeLogOut(int code) {
-        return code;
-    }
 }

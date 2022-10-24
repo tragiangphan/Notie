@@ -1,7 +1,6 @@
 package com.example.notesapp;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +9,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -30,12 +27,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NoteClickListener, NavigationView.OnNavigationItemSelectedListener {
+    Context thisContext = MainActivity.this;
 
     List<NoteModel> noteModels = new ArrayList<>();
     RecyclerView noteList;
@@ -60,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
         if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_notes);
         }
+        if (thisContext == MainActivity.this) {
+            navigationView.setCheckedItem(R.id.nav_notes);
+        }
     }
 
     @Override
@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
                 startActivity(editDirect);
                 break;
             case R.id.nav_lgout:
-                Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, SignupLoginActivity.class);
+                intent.putExtra(Constants.username, "");
+                startActivity(intent);
                 break;
             case R.id.nav_helps:
                 Intent helpLink = new Intent(Intent.ACTION_VIEW);
@@ -102,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.btnLogOut) {
-            Intent intent = new Intent(MainActivity.this, SignupLoginActivity.class);
+            Intent intent = new Intent(this, SignupLoginActivity.class);
+            intent.putExtra(Constants.username, "");
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

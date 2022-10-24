@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 public class SignupLoginActivity extends AppCompatActivity {
     TextInputLayout usernameEditText, passwordEditText;
     Button loginButton;
@@ -52,9 +54,10 @@ public class SignupLoginActivity extends AppCompatActivity {
     }
 
     private void checkAlreadyLogIn() {
-        if (StaticUtilities.getUsername(SignupLoginActivity.this) != null) {
+        String flagLogOut = getIntent().getStringExtra(Constants.username);
+        if (StaticUtilities.getUsername(SignupLoginActivity.this) != null && !Objects.equals(flagLogOut, "")) {
             startActivity(new Intent(SignupLoginActivity.this, MainActivity.class));
-//            finish();
+            finish();
         }
     }
 
