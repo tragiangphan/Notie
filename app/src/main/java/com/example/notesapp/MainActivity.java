@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NoteClickListener, NavigationView.OnNavigationItemSelectedListener {
-    Context thisContext = MainActivity.this;
-
     List<NoteModel> noteModels = new ArrayList<>();
     RecyclerView noteList;
     FloatingActionButton fabCreateNote;
@@ -57,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
         if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_notes);
         }
-        if (thisContext == MainActivity.this) {
-            navigationView.setCheckedItem(R.id.nav_notes);
-        }
     }
 
     @Override
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
                 startActivity(editDirect);
                 break;
             case R.id.nav_lgout:
-                Intent intent = new Intent(this, SignupLoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, SignupLoginActivity.class);
                 intent.putExtra(Constants.username, "");
                 startActivity(intent);
                 break;
@@ -104,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NoteClickListener
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.btnLogOut) {
-            Intent intent = new Intent(this, SignupLoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, SignupLoginActivity.class);
             intent.putExtra(Constants.username, "");
             startActivity(intent);
         }

@@ -232,7 +232,6 @@ public class ViewNoteActivity extends AppCompatActivity {
                     txtNoteContent.setPaintFlags(View.INVISIBLE);
                     flag6 = 0;
                 }
-
             }
         });
 
@@ -323,9 +322,6 @@ public class ViewNoteActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(Constants.naviItem, "");
-        startActivity(intent);
     }
 
     private void setNoteData() {
