@@ -81,7 +81,8 @@
                     android:textColor="?android:attr/textColorSecondary"
                     android:textSize="15sp"
                     android:maxLines="4"
-                    android:ellipsize="end"/>
+                    android:ellipsize="end"
+                    style="@style/TextAppearance.MaterialComponents.Body1"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

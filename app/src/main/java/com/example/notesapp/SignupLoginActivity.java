@@ -36,6 +36,17 @@ public class SignupLoginActivity extends AppCompatActivity {
         setEvent();
     }
 
+    private void setUpDatabse() {
+        userDatabase = FirebaseDatabase.getInstance().getReference("users");
+    }
+
+    private void setControl() {
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.password);
+        loginButton = findViewById(R.id.btnLogin);
+        loadingProgressBar = findViewById(R.id.loading);
+    }
+
     private void setEvent() {
         login();
         checkAlreadyLogIn();
@@ -79,17 +90,6 @@ public class SignupLoginActivity extends AppCompatActivity {
                 ProcessLogin(usernameEditText.getEditText().getText().toString(), passwordEditText.getEditText().getText().toString());
             }
         });
-    }
-
-    private void setUpDatabse() {
-        userDatabase = FirebaseDatabase.getInstance().getReference("users");
-    }
-
-    private void setControl() {
-        usernameEditText = findViewById(R.id.username);
-        passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.btnLogin);
-        loadingProgressBar = findViewById(R.id.loading);
     }
 
     private void ProcessLogin(String username, String password) {

@@ -10,7 +10,4 @@ public interface Constants {
             imageURL = "imageURL";
 
     String username = "username";
-
-    String naviItem = "naviItem";
-
 }

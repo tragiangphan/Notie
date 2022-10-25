@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
@@ -44,6 +43,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class ViewNoteActivity extends AppCompatActivity {
+    MaterialToolbar materialToolbar;
     String id, noteTitle, noteSubTitle, noteContent, createTime, noteImages;
     TextView txtCreateTime;
     FloatingActionButton fabSave;
@@ -53,7 +53,6 @@ public class ViewNoteActivity extends AppCompatActivity {
     Uri imageUri;
     private static final int PERMISSION_CODE = 123;
     private static final int CAPTURE_CODE = 1001;
-    MaterialToolbar materialToolbar;
     AlertDialog alertDelete;
 
     // Upload img
@@ -154,7 +153,6 @@ public class ViewNoteActivity extends AppCompatActivity {
         toolBigger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toolBigger.setBackgroundColor(getColor(R.color.OnSecondary));
                 float textSize = txtNoteContent.getTextSize();
                 txtNoteContent.setTextSize(0, txtNoteContent.getTextSize() + 2.0f);
 //                Toast.makeText(CreateNoteActivity.this, "Size is clicked", Toast.LENGTH_SHORT).show();
