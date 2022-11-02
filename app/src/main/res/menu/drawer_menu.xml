@@ -13,12 +13,27 @@
             android:icon="@drawable/ic_playlist_add_24px"
             android:title="Add Note" />
         <item
-            android:id="@+id/nav_lgout"
-            android:icon="@drawable/ic_account_circle_24px"
-            android:title="Log Out" />
+            android:id="@+id/nav_share_note"
+            android:icon="@drawable/ic_folder_shared_24px"
+            android:title="Shared Note" />
+
         <item
-            android:id="@+id/nav_helps"
-            android:icon="@drawable/ic_help_24px"
-            android:title="Help &amp; feedback" />
+            android:id="@+id/nav_test"
+            android:icon="@drawable/ic_account_circle_24px"
+            android:title="Account">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_lgout"
+                        android:icon="@drawable/ic_account_circle_24px"
+                        android:title="Log Out" />
+                    <item
+                        android:id="@+id/nav_helps"
+                        android:icon="@drawable/ic_help_24px"
+                        android:title="Help &amp; feedback" />
+                </group>
+            </menu>
+
+        </item>
     </group>
 </menu>

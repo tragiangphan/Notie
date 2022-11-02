@@ -28,68 +28,12 @@
             app:title="All Notes"
             app:titleTextColor="@color/dark" />
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/inputSearch"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_height="wrap_content"
-                    app:boxCornerRadiusBottomEnd="30dp"
-                    app:boxCornerRadiusBottomStart="30dp"
-                    app:boxCornerRadiusTopEnd="30dp"
-                    app:boxCornerRadiusTopStart="30dp"
-                    app:boxStrokeColor="@color/grey"
-                    app:hintEnabled="false"
-                    app:startIconDrawable="@drawable/ic_search_24px"
-                    android:background="@color/white">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:hint="Search note here..." />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="10dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/noteList"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="10dp"
-                        android:padding="10dp"
-                        tools:listitem="@layout/note_row" />
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabCreateNote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="30sp"
-                android:backgroundTint="@color/OnPrimaryContainer"
-                android:clickable="true"
-                android:contentDescription="Desc"
-                android:elevation="12sp"
-                app:borderWidth="0dp"
-                app:srcCompat="@drawable/ic_edit_24px"
-                app:tint="@color/PrimaryContainer" />
-        </RelativeLayout>
-
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -101,6 +45,8 @@
         android:layout_margin="0dp"
         android:background="@drawable/shape_half_right_corners"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu"
+        app:itemHorizontalPadding="10dp"
+        app:itemVerticalPadding="10dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

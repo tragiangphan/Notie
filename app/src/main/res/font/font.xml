@@ -10,7 +10,7 @@
         android:font="@font/whitney_semibold" />
     <font
         android:fontStyle="normal"
-        android:fontWeight="400"
+        android:fontWeight="500"
         android:font="@font/whitney_bold" />
     <font
         android:fontStyle="normal"

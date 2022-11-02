@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -53,10 +54,11 @@ public class ViewNoteActivity extends AppCompatActivity {
     Uri imageUri;
     private static final int PERMISSION_CODE = 123;
     private static final int CAPTURE_CODE = 1001;
-    AlertDialog alertDelete;
+    AlertDialog alertDelete, alertShare;
+    TextInputLayout txtShareUser;
 
     // Upload img
-    DatabaseReference noteDatabase;
+    DatabaseReference noteDatabase, sharedDatabase;
     StorageReference imageStorage;
 
     @Override
@@ -71,6 +73,7 @@ public class ViewNoteActivity extends AppCompatActivity {
     private void setDatabase() {
         imageStorage = FirebaseStorage.getInstance().getReference("images");
         noteDatabase = FirebaseDatabase.getInstance().getReference("users").child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels");
+        sharedDatabase = FirebaseDatabase.getInstance().getReference("users");
     }
 
     private void setControl() {
@@ -110,10 +113,54 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.btnDelete) {
-            showAlertDelete();
+        switch (item.getItemId()) {
+            case R.id.btnDelete:
+                showAlertDelete();
+                break;
+            case R.id.btnShare:
+                showAlertShare();
+                break;
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAlertShare() {
+        if (alertShare == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ViewNoteActivity.this);
+
+            View view = LayoutInflater.from(this).inflate(R.layout.share_alert_dialog,
+                    (ViewGroup) findViewById(R.id.shareDialog));
+            txtShareUser = view.findViewById(R.id.shareUser);
+
+            builder.setView(view);
+            alertShare = builder.create();
+            if (alertShare.getWindow() != null) {
+                alertShare.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            view.findViewById(R.id.txtShareNote).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(ViewNoteActivity.this, "Note Shared!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ViewNoteActivity.this, MainActivity.class);
+                    String idShare = sharedDatabase.push().getKey();
+                    String sharedUser = txtShareUser.getEditText().getText().toString();
+                    NoteModel noteShared = new NoteModel(idShare, noteTitle, noteSubTitle, noteContent, createTime, noteImages);
+                    assert idShare != null;
+                    sharedDatabase.child(sharedUser).child("sharedNotes").child(idShare).setValue(noteShared);
+                    startActivity(intent);
+                }
+            });
+
+            view.findViewById(R.id.txtCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alertShare.dismiss();
+                }
+            });
+        }
+        alertShare.show();
     }
 
     private void showAlertDelete() {
