@@ -93,13 +93,14 @@ public class SharedFragment extends Fragment implements NoteClickListener {
             // saved change on database (each snapshot)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     // query data for each attribute return strings
                     NoteModel noteModel = dataSnapshot.getValue(NoteModel.class);
                     noteModels.add(noteModel);
                 }
                 setAdapter();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -117,13 +118,14 @@ public class SharedFragment extends Fragment implements NoteClickListener {
 
     @Override
     public void onClickItem(NoteModel noteModel) {
-        Intent intent = new Intent(mainActivity, ViewNoteActivity.class);
+        Intent intent = new Intent(mainActivity, ViewShareActivity.class);
         intent.putExtra(Constants.id, noteModel.getId());
         intent.putExtra(Constants.noteTitle, noteModel.getNoteTitle());
         intent.putExtra(Constants.noteSubtitle, noteModel.getNoteSubtitle());
         intent.putExtra(Constants.noteContent, noteModel.getNoteContent());
         intent.putExtra(Constants.createTime, noteModel.getCreateTime());
         intent.putExtra(Constants.imageURL, noteModel.getImageURL());
+        intent.putStringArrayListExtra(Constants.sharers, noteModel.getSharer());
         startActivity(intent);
     }
 }

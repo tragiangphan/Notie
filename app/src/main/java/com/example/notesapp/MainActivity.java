@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setControl();
-//        FetchingData();
         setEvent();
         //  Check First Item in Navbar
         if (savedInstanceState == null) {
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_notes:
                 setTitle("Shared Notes");
                 switchFragment(new NotesFragment());
+                setTitle("All Notes");
                 break;
             case R.id.nav_add_note:
                 Intent editDirect = new Intent(MainActivity.this, CreateNoteActivity.class);
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_share_note:
                 setTitle("Shared Notes");
                 switchFragment(new SharedFragment());
+                setTitle("Shared Notes");
                 break;
             case R.id.nav_lgout:
                 Intent intent = new Intent(MainActivity.this, SignupLoginActivity.class);
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setControl() {
+        setTitle("All Notes");
         toolbar = findViewById(R.id.toolbarNotes);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);

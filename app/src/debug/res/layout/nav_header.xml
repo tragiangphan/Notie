@@ -2,25 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="170dp"
+    android:background="@drawable/photo_header_bg"
+    android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@drawable/photo_header_bg"
-    android:gravity="bottom">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notify"
         android:fontFamily="@font/whitney_bold"
-        android:textSize="50sp"
-        android:textColor="@color/white"/>
+        android:text="Notify"
+        android:textColor="@color/white"
+        android:textSize="50sp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="notify.dev@email.com"
         android:fontFamily="@font/whitney_medium"
-        android:textSize="16sp"
-        android:textColor="@color/white"/>
+        android:text="notify.dev@email.com"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 </LinearLayout>

@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class ViewNoteActivity extends AppCompatActivity {
+public class ViewShareActivity extends AppCompatActivity {
     MaterialToolbar materialToolbar;
     String id, noteTitle, noteSubTitle, noteContent, createTime, noteImages;
     TextView txtCreateTime;
@@ -64,12 +64,12 @@ public class ViewNoteActivity extends AppCompatActivity {
     // Upload img
     DatabaseReference noteDatabase;
     StorageReference imageStorage;
-    ArrayList<String> sharers = new ArrayList<String>();
+    ArrayList<String> sharers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_note);
+        setContentView(R.layout.activity_view_share);
         setDatabase();
         setControl();
         setEvent();
@@ -82,7 +82,7 @@ public class ViewNoteActivity extends AppCompatActivity {
     }
 
     private void setControl() {
-        setTitle("Edit Note");
+        setTitle("Edit share Note");
         materialToolbar = findViewById(R.id.toolbarEdit);
         txtNoteTitle = findViewById(R.id.noteTitle);
         txtNoteSubtitle = findViewById(R.id.noteSubtitle);
@@ -132,7 +132,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     private void showAlertShare() {
         if (alertShare == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ViewNoteActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(ViewShareActivity.this);
 
             View view = LayoutInflater.from(this).inflate(R.layout.share_alert_dialog,
                     (ViewGroup) findViewById(R.id.shareDialog));
@@ -147,14 +147,11 @@ public class ViewNoteActivity extends AppCompatActivity {
             view.findViewById(R.id.txtShareNote).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(ViewNoteActivity.this, "Note Shared!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ViewNoteActivity.this, MainActivity.class);
-//                    String idShare = sharedDatabase.push().getKey();
+                    Toast.makeText(ViewShareActivity.this, "Note Shared!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ViewShareActivity.this, MainActivity.class);
                     String sharer = txtShareUser.getEditText().getText().toString();
-                    sharers.add(sharer);
                     NoteModel noteShared = new NoteModel(id, noteTitle, noteSubTitle, noteContent, createTime, noteImages, sharers);
                     noteDatabase.child(sharer).child("sharedNotes").child(id).setValue(noteShared);
-                    noteDatabase.child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels").child(id).setValue(noteShared);
                     startActivity(intent);
                 }
             });
@@ -171,7 +168,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
     private void showAlertDelete() {
         if (alertDelete == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ViewNoteActivity.this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(ViewShareActivity.this);
 
             View view = LayoutInflater.from(this).inflate(R.layout.delete_alert_dialog,
                     (ViewGroup) findViewById(R.id.deleteDialog));
@@ -185,9 +182,9 @@ public class ViewNoteActivity extends AppCompatActivity {
             view.findViewById(R.id.txtDeleteNote).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(ViewNoteActivity.this, "Note Deleted!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(ViewNoteActivity.this, MainActivity.class);
-                    noteDatabase.child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels").child(id).removeValue();
+                    Toast.makeText(ViewShareActivity.this, "Note Deleted!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ViewShareActivity.this, MainActivity.class);
+                    noteDatabase.child(StaticUtilities.getUsername(ViewShareActivity.this)).child("sharedNotes").child(id).removeValue();
                     startActivity(intent);
                 }
             });
@@ -287,7 +284,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         toolAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newImgView = new ImageView(ViewNoteActivity.this);
+                newImgView = new ImageView(ViewShareActivity.this);
                 layoutAddImage.removeView(displayImage);
                 layoutAddImage.addView(newImgView);
                 openGallery();
@@ -297,7 +294,7 @@ public class ViewNoteActivity extends AppCompatActivity {
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                newImgView = new ImageView(ViewNoteActivity.this);
+                newImgView = new ImageView(ViewShareActivity.this);
                 layoutAddImage.removeView(displayImage);
                 layoutAddImage.addView(newImgView);
                 if (checkSelfPermission(Manifest.permission.CAMERA)
@@ -311,7 +308,6 @@ public class ViewNoteActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void openCamera() {
@@ -423,9 +419,9 @@ public class ViewNoteActivity extends AppCompatActivity {
                                             uri.toString(),
                                             sharers);
 
-                                    UpdateNoteShare(noteModel,"noteModels", "sharedNotes");
-                                    noteDatabase.child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels").child(id).setValue(noteModel);
-                                    startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
+                                    UpdateNoteShare(noteModel, "noteModels", "sharedNotes");
+//                                    CheckExistID(noteModel);
+                                    startActivity(new Intent(ViewShareActivity.this, MainActivity.class));
                                 }
                             });
                         }
@@ -440,10 +436,8 @@ public class ViewNoteActivity extends AppCompatActivity {
                     noteImages.toString(),
                     sharers);
 
-            UpdateNoteShare(noteModel,"noteModels", "sharedNotes");
-            noteDatabase.child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels").child(id).setValue(noteModel);
-//            CheckExistID(noteModel);
-            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
+            UpdateNoteShare(noteModel, "noteModels", "sharedNotes");
+            startActivity(new Intent(ViewShareActivity.this, MainActivity.class));
         } else {
             // set data for new note model without image
             @SuppressLint("SimpleDateFormat") NoteModel noteModel = new NoteModel(
@@ -456,13 +450,7 @@ public class ViewNoteActivity extends AppCompatActivity {
                     sharers);
 
             UpdateNoteShare(noteModel, "noteModels", "sharedNotes");
-            noteDatabase.child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels").child(id).setValue(noteModel);
-//            CheckExistID(noteModel);
-            startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
-        }
-        for (String sharer :
-                sharers) {
-            Toast.makeText(ViewNoteActivity.this, sharer, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ViewShareActivity.this, MainActivity.class));
         }
     }
 
@@ -484,8 +472,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
                     }
                 });
-            }
-            else {
+            } else {
                 noteDatabase.child(sharer).child(noteModels).child(id).setValue(noteModel);
             }
         }
@@ -496,4 +483,5 @@ public class ViewNoteActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(imageUri));
     }
+
 }

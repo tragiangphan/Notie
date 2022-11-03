@@ -33,6 +33,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CreateNoteActivity extends AppCompatActivity {
@@ -48,6 +49,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     DatabaseReference noteDatabase;
     StorageReference imageStorage;
+    ArrayList<String> sharer = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +111,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sharer.add(StaticUtilities.getUsername(CreateNoteActivity.this));
                 saveNoteDetail();
             }
         });
@@ -131,8 +134,10 @@ public class CreateNoteActivity extends AppCompatActivity {
                                             editSubtitle.getText().toString(),
                                             editContent.getText().toString(),
                                             new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
-                                            uri.toString());
+                                            uri.toString(),
+                                            sharer);
 
+                                    assert id != null;
                                     noteDatabase.child(id).setValue(noteModel);
                                     startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
                                 }
@@ -147,7 +152,9 @@ public class CreateNoteActivity extends AppCompatActivity {
                     editSubtitle.getText().toString(),
                     editContent.getText().toString(),
                     new SimpleDateFormat("MMM dd yyyy HH:mm").format(new Date()),
-                    "");
+                    "",
+                    sharer);
+            assert id != null;
             noteDatabase.child(id).setValue(noteModel);
             startActivity(new Intent(CreateNoteActivity.this, MainActivity.class));
         }
@@ -311,7 +318,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 100) {
             imageUri = data.getData();
             newImgView.setImageURI(imageUri);
-            //  imageAddPhoto.clearColorFilter();
         }
         if (resultCode == RESULT_OK && requestCode == CAPTURE_CODE) {
             newImgView.setImageURI(imageUri);

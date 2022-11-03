@@ -127,6 +127,7 @@ public class NotesFragment extends Fragment implements NoteClickListener {
         intent.putExtra(Constants.noteContent, noteModel.getNoteContent());
         intent.putExtra(Constants.createTime, noteModel.getCreateTime());
         intent.putExtra(Constants.imageURL, noteModel.getImageURL());
+        intent.putStringArrayListExtra(Constants.sharers, noteModel.getSharer());
         startActivity(intent);
     }
 }

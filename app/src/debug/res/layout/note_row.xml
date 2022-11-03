@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/noteParent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/noteCard"
         style="?attr/materialCardViewElevatedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:cardCornerRadius="15sp"
-        app:cardElevation="6dp"
-        android:layout_margin="10dp">
+        app:cardElevation="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,6 +43,7 @@
 
                     <TextView
                         android:id="@+id/noteTitle"
+                        style="@style/TextAppearance.Material3.TitleMedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -51,38 +52,37 @@
                         android:singleLine="true"
                         android:text="Title"
                         android:textColor="@color/dark"
-                        android:textSize="20sp"
-                        style="@style/TextAppearance.Material3.TitleMedium"/>
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/noteSubtitle"
+                    style="@style/TextAppearance.MaterialComponents.Caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4sp"
-                    android:text="Subtitle"
-                    android:singleLine="true"
                     android:ellipsize="end"
-                    style="@style/TextAppearance.MaterialComponents.Caption"
+                    android:singleLine="true"
+                    android:text="Subtitle"
                     android:textColor="@color/grey"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/noteContent"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5sp"
+                    android:ellipsize="end"
                     android:fontFamily="@font/whitney_medium"
                     android:justificationMode="inter_word"
                     android:lineHeight="20dp"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:textSize="15sp"
                     android:maxLines="4"
-                    android:ellipsize="end"
-                    style="@style/TextAppearance.MaterialComponents.Body1"/>
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="15sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -91,14 +91,14 @@
 
                     <TextView
                         android:id="@+id/createTime"
+                        style="@style/TextAppearance.MaterialComponents.Caption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginEnd="4sp"
                         android:text="14/10/2022"
-                        style="@style/TextAppearance.MaterialComponents.Caption"
                         android:textColor="@color/grey"
-                        android:textSize="12sp"
-                        android:layout_alignParentEnd="true"/>
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
             </LinearLayout>

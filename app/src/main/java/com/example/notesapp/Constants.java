@@ -7,7 +7,9 @@ public interface Constants {
             noteSubtitle = "noteSubtitle",
             noteContent = "noteContent",
             createTime = "createTime",
-            imageURL = "imageURL";
+            imageURL = "imageURL",
+            sharers = "sharers";
 
     String username = "username";
 }
+

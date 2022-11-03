@@ -1,6 +1,6 @@
 package com.example.notesapp;
 
-import androidx.annotation.Nullable;
+import java.util.ArrayList;
 
 public class NoteModel {
     String id, noteTitle,
@@ -8,17 +8,19 @@ public class NoteModel {
             noteContent,
             createTime,
             imageURL;
+    ArrayList<String> sharer;
 
     public NoteModel() {
     }
 
-    public NoteModel(String id, String noteTitle, String noteSubtitle, String noteContent, String createTime, String imageURL) {
+    public NoteModel(String id, String noteTitle, String noteSubtitle, String noteContent, String createTime, String imageURL, ArrayList<String> sharer) {
         this.id = id;
         this.noteTitle = noteTitle;
         this.noteSubtitle = noteSubtitle;
         this.noteContent = noteContent;
         this.createTime = createTime;
         this.imageURL = imageURL == null ? "" : imageURL;
+        this.sharer = sharer;
     }
 
     public String getId() {
@@ -67,5 +69,13 @@ public class NoteModel {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public ArrayList<String> getSharer() {
+        return sharer;
+    }
+
+    public void setSharer(ArrayList<String> sharer) {
+        this.sharer = sharer;
     }
 }

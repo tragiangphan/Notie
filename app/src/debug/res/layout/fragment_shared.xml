@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".NotesFragment">
+    tools:context=".SharedFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -17,20 +17,20 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputSearch"
+                android:id="@+id/inputSearchShare"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:layout_height="wrap_content"
+                android:background="@color/white"
                 app:boxCornerRadiusBottomEnd="30dp"
                 app:boxCornerRadiusBottomStart="30dp"
                 app:boxCornerRadiusTopEnd="30dp"
                 app:boxCornerRadiusTopStart="30dp"
                 app:boxStrokeColor="@color/grey"
                 app:hintEnabled="false"
-                app:startIconDrawable="@drawable/ic_search_24px"
-                android:background="@color/white">
+                app:startIconDrawable="@drawable/ic_search_24px">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:padding="10dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/noteList"
+                    android:id="@+id/shareList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabCreateNote"
+            android:id="@+id/fabShareNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -68,5 +68,6 @@
             app:srcCompat="@drawable/ic_edit_24px"
             app:tint="@color/PrimaryContainer" />
     </RelativeLayout>
+
 
 </FrameLayout>

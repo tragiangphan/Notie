@@ -17,12 +17,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.LogRecord;
 
 public class NoteItemsRecyclerView extends RecyclerView.Adapter {
     // Search notes
@@ -109,7 +107,7 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
     }
 
     // Search note
-    public void searchNotes (String searchKey) {
+    public void searchNotes(String searchKey) {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -121,8 +119,8 @@ public class NoteItemsRecyclerView extends RecyclerView.Adapter {
                     for (NoteModel note :
                             noteModelsSource) {
                         if (note.getNoteTitle().toLowerCase().contains(searchKey.toLowerCase()) ||
-                        note.getNoteSubtitle().toLowerCase().contains(searchKey.toLowerCase()) ||
-                        note.getNoteContent().toLowerCase().contains(searchKey.toLowerCase())) {
+                                note.getNoteSubtitle().toLowerCase().contains(searchKey.toLowerCase()) ||
+                                note.getNoteContent().toLowerCase().contains(searchKey.toLowerCase())) {
                             temp.add(note);
                         }
                     }

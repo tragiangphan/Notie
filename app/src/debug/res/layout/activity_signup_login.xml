@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
-
     tools:context=".SignupLoginActivity">
 
     <androidx.cardview.widget.CardView
@@ -71,8 +70,8 @@
                     app:boxStrokeColor="@color/Primary"
                     app:boxStrokeWidth="2dp"
                     app:boxStrokeWidthFocused="3dp"
-                    app:startIconDrawable="@drawable/ic_email_24px"
-                    app:endIconMode="clear_text">
+                    app:endIconMode="clear_text"
+                    app:startIconDrawable="@drawable/ic_email_24px">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -96,45 +95,15 @@
                     app:boxStrokeColor="@color/Primary"
                     app:boxStrokeWidth="2dp"
                     app:boxStrokeWidthFocused="3dp"
-                    app:startIconDrawable="@drawable/ic_lock_24px"
-                    app:endIconMode="password_toggle">
+                    app:endIconMode="password_toggle"
+                    app:startIconDrawable="@drawable/ic_lock_24px">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:inputType="textPassword"/>
+                        android:inputType="textPassword"
+                        android:textSize="20sp" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="10sp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <CheckBox-->
-<!--                        android:id="@+id/chkRemember"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="left"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:fontFamily="@font/whitney_medium"-->
-<!--                        android:text="Remember me"-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/txtLogin"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginEnd="5sp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:fontFamily="@font/whitney_semibolditalic"-->
-<!--                        android:gravity="end"-->
-<!--                        android:text="Forgot password?"-->
-<!--                        android:textColor="@color/PrimaryContainer"-->
-<!--                        android:textSize="18sp" />-->
-<!--                </LinearLayout>-->
 
                 <Button
                     android:id="@+id/btnLogin"
@@ -147,29 +116,6 @@
                     android:paddingRight="20sp"
                     android:text="Sign In"
                     android:textColor="@color/OnSecondaryContainer" />
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="center"-->
-<!--                    android:layout_margin="10dp">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Don't have an account? "-->
-<!--                        android:fontFamily="@font/whitney_medium"-->
-<!--                        android:textSize="16sp"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/btnSignUpDirect"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Sign Up"-->
-<!--                        android:fontFamily="@font/whitney_semibolditalic"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textColor="@color/SecondaryContainer"/>-->
-<!--                </LinearLayout>-->
             </LinearLayout>
 
             <ProgressBar
