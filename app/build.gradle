@@ -48,4 +48,6 @@ dependencies {
 
     // upload and retrieve image
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "androidx.media:media:1.3.0-rc02"
+    implementation 'androidx.work:work-runtime-ktx:2.7.0'
 }

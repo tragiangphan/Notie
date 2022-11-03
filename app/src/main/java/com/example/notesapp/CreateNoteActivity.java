@@ -2,8 +2,12 @@ package com.example.notesapp;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
@@ -18,10 +22,13 @@ import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -32,11 +39,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
-public class CreateNoteActivity extends AppCompatActivity {
+public class CreateNoteActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
     FloatingActionButton fabSave;
     EditText editTitle, editSubtitle, editContent;
     MaterialToolbar materialToolbar;
@@ -46,6 +55,9 @@ public class CreateNoteActivity extends AppCompatActivity {
     Uri imageUri;
     private static final int PERMISSION_CODE = 123;
     private static final int CAPTURE_CODE = 1001;
+
+    ImageView imgReminder;
+    TextView txtNoti;
 
     DatabaseReference noteDatabase;
     StorageReference imageStorage;
@@ -81,12 +93,62 @@ public class CreateNoteActivity extends AppCompatActivity {
         toolAddPhoto = findViewById(R.id.btnAddPhoto);
         layoutAddImage = findViewById(R.id.layoutAddImage);
         btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        imgReminder = findViewById(R.id.imgReminder);
+        txtNoti = findViewById(R.id.txtNoti);
     }
 
     private void setEvent() {
         turnBack();
         saveBtn();
         toolModified();
+        showReminder();
+    }
+
+    private void showReminder() {
+        imgReminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                startActivity(new Intent(CreateNoteActivity.this, MainActivity2.class));
+//                Toast.makeText(CreateNoteActivity.this, "Reminder clicked", Toast.LENGTH_SHORT).show();
+                DialogFragment timePicker2 = new TimePickerFragment();
+                timePicker2.show(getSupportFragmentManager(), "time picker");
+
+            }
+        });
+    }
+
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.SECOND, 0);
+
+        updateTimeText(c);
+        startAlarm(c);
+    }
+
+    private void updateTimeText(Calendar c) {
+        String timeText = "Alarm set for: ";
+        timeText += DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
+
+        txtNoti.setText(timeText);
+    }
+
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent notiIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notiIntent, PendingIntent.FLAG_MUTABLE);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+
+    }
+
+    private void cancelAlarm(){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent notiIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notiIntent, PendingIntent.FLAG_MUTABLE);
+        txtNoti.setText("Notification canceled");
     }
 
     private void turnBack() {

@@ -68,6 +68,23 @@
                         android:textSize="22sp"
                         tools:ignore="NestedWeights" />
 
+                    <TextView
+                        android:id="@+id/txtNoti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No notification"
+                        android:textSize="15dp"
+                        android:fontFamily="@font/whitney_medium"
+                        android:layout_marginEnd="5dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/imgReminder"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_timer"
+                        app:tint="@color/grey" />
+
                 </LinearLayout>
 
                 <TextView
