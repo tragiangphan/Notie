@@ -144,13 +144,6 @@ public class CreateNoteActivity extends AppCompatActivity implements TimePickerD
 
     }
 
-    private void cancelAlarm(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent notiIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notiIntent, PendingIntent.FLAG_MUTABLE);
-        txtNoti.setText("Notification canceled");
-    }
-
     private void turnBack() {
         setSupportActionBar(materialToolbar);
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {

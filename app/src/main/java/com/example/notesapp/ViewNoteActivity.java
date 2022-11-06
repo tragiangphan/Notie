@@ -122,6 +122,7 @@ public class ViewNoteActivity extends AppCompatActivity implements TimePickerDia
         saveBtn();
         toolModified();
         showReminder();
+
     }
 
     private void showReminder() {
@@ -136,6 +137,7 @@ public class ViewNoteActivity extends AppCompatActivity implements TimePickerDia
             }
         });
     }
+
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -161,14 +163,6 @@ public class ViewNoteActivity extends AppCompatActivity implements TimePickerDia
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notiIntent, PendingIntent.FLAG_MUTABLE);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-
-    }
-
-    private void cancelAlarm(){
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent notiIntent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, notiIntent, PendingIntent.FLAG_MUTABLE);
-        txtNoti.setText("Notification canceled");
     }
 
     @Override
@@ -433,6 +427,16 @@ public class ViewNoteActivity extends AppCompatActivity implements TimePickerDia
         });
     }
 
+    private void getNoteData() {
+        id = getIntent().getStringExtra(Constants.id);
+        noteTitle = getIntent().getStringExtra(Constants.noteTitle);
+        noteSubTitle = getIntent().getStringExtra(Constants.noteSubtitle);
+        noteContent = getIntent().getStringExtra(Constants.noteContent);
+        createTime = getIntent().getStringExtra(Constants.createTime);
+        noteImages = getIntent().getStringExtra(Constants.imageURL);
+        sharers = getIntent().getStringArrayListExtra(Constants.sharers);
+    }
+
     private void setNoteData() {
         txtNoteTitle.setText(noteTitle);
         txtNoteSubtitle.setText(noteSubTitle);
@@ -443,16 +447,6 @@ public class ViewNoteActivity extends AppCompatActivity implements TimePickerDia
                     .load(noteImages)
                     .into(displayImage);
         }
-    }
-
-    private void getNoteData() {
-        id = getIntent().getStringExtra(Constants.id);
-        noteTitle = getIntent().getStringExtra(Constants.noteTitle);
-        noteSubTitle = getIntent().getStringExtra(Constants.noteSubtitle);
-        noteContent = getIntent().getStringExtra(Constants.noteContent);
-        createTime = getIntent().getStringExtra(Constants.createTime);
-        noteImages = getIntent().getStringExtra(Constants.imageURL);
-        sharers = getIntent().getStringArrayListExtra(Constants.sharers);
     }
 
     private void saveBtn() {
@@ -520,10 +514,6 @@ public class ViewNoteActivity extends AppCompatActivity implements TimePickerDia
             noteDatabase.child(StaticUtilities.getUsername(ViewNoteActivity.this)).child("noteModels").child(id).setValue(noteModel);
 //            CheckExistID(noteModel);
             startActivity(new Intent(ViewNoteActivity.this, MainActivity.class));
-        }
-        for (String sharer :
-                sharers) {
-            Toast.makeText(ViewNoteActivity.this, sharer, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -17,6 +17,7 @@
         android:textSize="50sp" />
 
     <TextView
+        android:id="@+id/txtUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/whitney_medium"
